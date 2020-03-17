@@ -32,3 +32,22 @@ def encrypt(text, key):
 
     return encrypted
 
+def decrypt(text, key):
+    # apply lowercase to both key and ciphertext
+    text = text.lower()
+    key = key.lower()
+
+    # expand key to the length of the ciphertext
+    cipherkey = expand_to_length(key, len(text))
+    decrypted = ""
+    for letter in range(0, len(text)):
+        # get alphabet position of the letters from the key
+        asc = ord(cipherkey[letter]) - 97
+        # get group row number
+        rownr = int(asc / 2)
+
+        # return value from the corresponding row and column
+        val = str(chr((rows[rownr].replace(" ", "").index(text[letter]) + 97)))
+        decrypted += val
+
+    return decrypted
